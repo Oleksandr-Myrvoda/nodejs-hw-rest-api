@@ -3,15 +3,18 @@ const { contact: service } = require("../../services");
 const getAll = async (req, res, next) => {
   const { query } = req;
   try {
-    const result = await service.getAll({ query });
+    console.log("no error");
+    const result = await service.getAll(query);
     res.json({
       status: "success",
+      query: query,
       code: 200,
       data: {
         result,
       },
     });
   } catch (error) {
+    console.log("error");
     next(error);
   }
 };

@@ -1,5 +1,5 @@
 const { contact: service } = require("../../services");
-const contactSchema = require("../../services/validation");
+const { validation: contactSchema } = require("../../services");
 
 const add = async (req, res, next) => {
   console.log(req.body);
@@ -24,11 +24,5 @@ const add = async (req, res, next) => {
     next(error);
   }
 };
-
-// {
-// "name":"Reanu Keawes",
-// "email":"neo@google.com",
-// "phone":"(097)1234567"
-// }
 
 module.exports = add;
