@@ -8,12 +8,15 @@ const routes = require("./api");
 
 const app = express();
 
+require("./configs/config-passport");
+
 app.use(cors());
-// const formatsLogger = app.get("env") === "development" ? "dev" : "short";
+const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
-// app.use(logger(formatsLogger));
-// app.use(express.json());
+app.use(logger(formatsLogger));
+app.use(express.json());
 
+app.use("/api/v1/auth", routes.users);
 app.use("/api/v1/contacts", routes.contacts);
 
 app.use((req, res) => {
@@ -46,5 +49,3 @@ mongoose
   .catch(({ message }) => {
     console.log(`Connection error: ${message}`), process.exit(1);
   });
-
-// module.exports = app;

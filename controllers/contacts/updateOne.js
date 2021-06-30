@@ -1,11 +1,11 @@
 const { contact: service } = require("../../services");
-const contactSchema = require("../../services/validation");
+const { validation: contactSchema } = require("../../services");
 
 const updateOne = async (req, res, next) => {
-  const { id } = req.params;
+  const { contactId } = req.params;
 
   try {
-    const result = await service.updateOne(id, req.body);
+    const result = await service.updateOne(contactId, req.body);
     const { error } = contactSchema.validate(result);
     res.status(201).json({
       status: "success",
