@@ -11,12 +11,13 @@ const app = express();
 require("./configs/config-passport");
 
 app.use(cors());
+
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
-
 app.use(logger(formatsLogger));
-app.use(express.json());
 
-app.use("/api/v1/auth", routes.users);
+app.use(express.static("public"));
+
+app.use("/api/v1/users", routes.users);
 app.use("/api/v1/contacts", routes.contacts);
 
 app.use((req, res) => {

@@ -4,11 +4,15 @@ require("dotenv").config();
 
 const getCurrent = async (res, req, next) => {
   try {
+    const { TOKEN_KEY } = process.env;
+    const [, token] = req.headers.Authorization.split(" ");
+    const { id } = jwt.verify(token, TOKEN_KEY);
+    const user = await servises.getById(id);
     res.json({
       status: "success",
       code: 200,
       data: {
-        result: req.user,
+        result: user,
       },
     });
   } catch (error) {
