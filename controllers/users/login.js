@@ -14,6 +14,14 @@ const login = async (req, res, next) => {
       });
     }
 
+    if (!user.verify) {
+      return res.status(400).json({
+        status: "fail",
+        code: 400,
+        message: "Email is not verifycated",
+      });
+    }
+
     const payload = {
       id: user._id,
     };

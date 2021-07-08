@@ -1,4 +1,7 @@
 const { users: services } = require("../../services");
+const gravatar = require("gravatar");
+const { v4 } = require("uuid");
+const sendMail = require("../../utils");
 
 const signup = async (req, res, next) => {
   const { email, password } = req.body;
@@ -12,7 +15,15 @@ const signup = async (req, res, next) => {
       });
     }
 
-    const user = await services.add({ email, password });
+    const verificationToken = v4();
+    await sendMail(email, verificationToken);
+    const avatarURL = gravatar.url(email).substr(2);
+    const user = await services.add({
+      email,
+      password,
+      avatarURL,
+      verificationToken,
+    });
 
     res.status(201).json({
       status: "sucsess",
